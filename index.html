@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WoW Guild Randomizer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>WoW Guild Randomizer</h1>
+            <p>Randomly assign players to roles, classes, and specs for your raid</p>
+        </header>
+
+        <main>
+            <!-- Input Section -->
+            <section class="input-section">
+                <h2>Enter Player Names</h2>
+                <div class="input-group">
+                    <label for="playerNames">Player names (separated by commas, spaces, or new lines):</label>
+                    <textarea 
+                        id="playerNames" 
+                        placeholder="Enter 15-30 player names separated by commas, spaces, or new lines..."
+                        rows="4"
+                    ></textarea>
+                    <button id="submitPlayers" class="btn btn-primary">Submit Players</button>
+                </div>
+            </section>
+
+            <!-- Player Selection Section -->
+            <section class="selection-section" id="selectionSection" style="display: none;">
+                <h2>Select Player to Assign</h2>
+                <div class="player-list" id="playerList">
+                    <!-- Players will be populated here -->
+                </div>
+                <div class="action-buttons">
+                    <button id="assignSelected" class="btn btn-secondary">Assign Selected</button>
+                    <button id="randomizeAll" class="btn btn-accent">Randomize All</button>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <h2>Raid Assignments</h2>
+                <div class="results-container">
+                    <div class="assignment-groups">
+                        <div class="group tanks">
+                            <h3>Tanks (2)</h3>
+                            <div id="tankAssignments" class="assignments"></div>
+                        </div>
+                        <div class="group healers">
+                            <h3>Healers (<span id="healerCount">0</span>)</h3>
+                            <div id="healerAssignments" class="assignments"></div>
+                        </div>
+                        <div class="group dps">
+                            <h3>DPS (<span id="dpsCount">0</span>)</h3>
+                            <div id="dpsAssignments" class="assignments"></div>
+                        </div>
+                    </div>
+                    <div class="class-summary">
+                        <h3>Class Distribution</h3>
+                        <div id="classSummary" class="summary-grid"></div>
+                    </div>
+                </div>
+                <div class="share-section">
+                    <button id="generateLink" class="btn btn-secondary">Generate Share Link</button>
+                    <div id="shareLink" class="share-link" style="display: none;"></div>
+                </div>
+            </section>
+
+            <!-- Error Messages -->
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

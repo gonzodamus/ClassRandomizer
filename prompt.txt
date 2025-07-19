@@ -1,0 +1,98 @@
+Context: We are creating a light and performant website that will allow Warcraft guilds to randomly assign players to roles, classes, and specs. 
+
+--- technical Requirements ---
+
+This should be able to run without needing a server.
+Tech stack: html, css, javascript
+Data should be saved in localstorage
+There should be an option to generate url params in order to share results.
+This should work on chrome and firefox
+
+---- ui/ux ---
+
+Should be a dark background, with a focus on dark greys and black.
+No need for mobile functionality, but should scale to a small laptop.
+
+
+---- functionality ---
+
+User will paste a comma separated list of names (referred to as characters). 
+User will hit submit, and names will be listed with radial selectors next to them
+The app will accept between 15 and 30 names.
+User will choose a name using radial
+User will click "assign" button
+Selected character will be given a role, class, and spec.
+Characters selected this way are assigned individually.
+Users also have the option to "randomize all"
+There will be two tanks, which will be different classes.
+Track how many of each class is assigned to the raid.
+For a raid of 15-19 people, there will be 3 healers
+For a raid of 20-24 people, there will be 4 healers
+For a raid of 25-30 people, there will be 5 healers.
+Track healer specs as they are assigned.
+Do not repeat healer specs. There are 7 healer specs and a max of 5 healers.
+DPS will be assigned with randomness, but each class must be represented in the raid.
+All classes must be represented by at least one character.
+use wow_classes.json for your class and role information.
+
+
+------ instructions ------
+
+1. **Project Setup:**
+   - Create index.html, styles.css, and script.js files
+   - Load wow_classes.json as a JavaScript object
+   - Set up localStorage for state persistence
+
+2. **Core Data Structure:**
+   - Create a state object to track:
+     - List of players (names)
+     - Assigned players with their class/spec/role
+     - Remaining unassigned players
+     - Used healer specs (to prevent duplicates)
+     - Class count tracking
+
+3. **UI Implementation:**
+   - Dark theme with grey/black color scheme
+   - Text area for comma-separated player names input
+   - Submit button to process player list
+   - Display players with radio buttons for selection
+   - "Assign" button for individual assignments
+   - "Randomize All" button for batch assignment
+   - Results display showing assignments
+   - "Generate Share Link" button
+
+4. **Assignment Algorithm:**
+   - **Tanks:** Randomly assign 2 different classes from tank specs
+   - **Healers:** Based on raid size (3-5), randomly assign different healer specs
+   - **DPS:** Ensure all remaining classes are represented, then randomize remaining slots
+   - Track used specs to prevent duplicates
+
+5. **Persistence Implementation:**
+   - Save state to localStorage on each assignment
+   - Load state from localStorage on page load
+   - Generate URL parameters for sharing (player list + assignments)
+   - Parse URL parameters to restore shared state
+   - encode params
+
+6. **Error Handling:**
+   - Validate player count (15-30)
+   - Handle invalid input (empty names, non-comma separated)
+   - Prevent duplicate player assignments
+   - Handle edge cases (not enough players for all classes)
+   - Error messages: "Please enter between 15-30 player names", "Invalid format: use comma-separated names"
+
+7. **Testing Requirements:**
+   - Test with minimum (15) and maximum (30) players
+   - Verify all classes are represented
+   - Confirm no duplicate healer specs
+   - Test localStorage persistence
+   - Test URL sharing functionality
+   - Test in Chrome and Firefox
+
+8. **Performance Considerations:**
+   - Efficient random selection algorithms
+   - Minimal DOM manipulation
+   - Responsive UI for laptop screens
+   - Assignment should complete within 1 second
+   - Page load time under 2 seconds
+   - Smooth UI interactions
