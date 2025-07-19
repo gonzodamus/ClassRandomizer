@@ -110,6 +110,7 @@ let state = {
 const elements = {
     playerNames: document.getElementById('playerNames'),
     submitPlayers: document.getElementById('submitPlayers'),
+    inputSection: document.querySelector('.input-section'),
     selectionSection: document.getElementById('selectionSection'),
     playerList: document.getElementById('playerList'),
     assignSelected: document.getElementById('assignSelected'),
@@ -122,6 +123,7 @@ const elements = {
     dpsCount: document.getElementById('dpsCount'),
     classSummary: document.getElementById('classSummary'),
     generateLink: document.getElementById('generateLink'),
+    startOver: document.getElementById('startOver'),
     shareLink: document.getElementById('shareLink'),
     errorMessage: document.getElementById('errorMessage')
 };
@@ -153,6 +155,7 @@ function setupEventListeners() {
     elements.assignSelected.addEventListener('click', handleAssignSelected);
     elements.randomizeAll.addEventListener('click', handleRandomizeAll);
     elements.generateLink.addEventListener('click', handleGenerateLink);
+    elements.startOver.addEventListener('click', handleStartOver);
 }
 
 // Handle player submission
@@ -226,6 +229,7 @@ function handleAssignSelected() {
         
         // Check if all players are assigned
         if (state.remaining.length === 0) {
+            elements.inputSection.style.display = 'none';
             elements.selectionSection.style.display = 'none';
             elements.resultsSection.style.display = 'block';
         }
@@ -262,6 +266,7 @@ function handleRandomizeAll() {
     updateUI();
     
     // Show results
+    elements.inputSection.style.display = 'none';
     elements.selectionSection.style.display = 'none';
     elements.resultsSection.style.display = 'block';
 }
@@ -492,6 +497,32 @@ function handleGenerateLink() {
     elements.shareLink.style.display = 'block';
 }
 
+// Handle start over
+function handleStartOver() {
+    // Clear state
+    state.players = [];
+    state.assignments = {};
+    state.remaining = [];
+    state.usedHealerSpecs.clear();
+    state.classCount = {};
+    state.raidSize = 0;
+    
+    // Clear localStorage
+    localStorage.removeItem('wowRandomizer');
+    
+    // Reset UI
+    elements.playerNames.value = '';
+    elements.inputSection.style.display = 'block';
+    elements.selectionSection.style.display = 'none';
+    elements.resultsSection.style.display = 'none';
+    elements.shareLink.style.display = 'none';
+    
+    // Clear results
+    updateUI();
+    
+    hideError();
+}
+
 // Generate share URL
 function generateShareUrl() {
     const baseUrl = window.location.origin + window.location.pathname;
@@ -542,6 +573,7 @@ function checkUrlParams() {
             updateUI();
             
             if (state.remaining.length === 0) {
+                elements.inputSection.style.display = 'none';
                 elements.selectionSection.style.display = 'none';
                 elements.resultsSection.style.display = 'block';
             }
@@ -573,6 +605,8 @@ function loadState() {
             elements.playerNames.value = state.players.join(', ');
             elements.selectionSection.style.display = 'block';
             if (state.remaining.length === 0) {
+                elements.inputSection.style.display = 'none';
+                elements.selectionSection.style.display = 'none';
                 elements.resultsSection.style.display = 'block';
             }
         }
